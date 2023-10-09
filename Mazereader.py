@@ -36,8 +36,10 @@ def ReadMaze(image):
             elif x[0] == x[1] == x[2]:
                 if x == (0,0,0) or x == (0,0,0,255):
                     y = BLANK
-                elif x == (255,255,255) or x == (255,255,255,255):
-                    y = "0"
+                else:
+                    v = x[0]
+                    v = (1-(v/255)) * 9
+                    y = str(int(v))
             else:
                 y = "G"
                 
