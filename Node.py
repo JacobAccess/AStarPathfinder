@@ -38,6 +38,15 @@ class Node:
             return True
         return False
 
+    def in_journey(self, node):
+        p = self.parent
+        while p is not None:
+            if node.board.state == p.board.state:
+                return True
+            else:
+                p = p.parent
+        return False
+
     def __str__(self):
         c = self.cost
         h = self.heuristic()

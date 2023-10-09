@@ -43,13 +43,15 @@ while len(nodes) > 0:
     nm = focus.find_moves()
     for i in nm:
         iname = i.name()
-        if (not iname in expanded) and (not iname in unexpanded):
-            if i.find_player() == [14, 2]:
+        if i.find_player() == [14, 2]:
                 print("Junction")
                 print(i.parent.board)
                 print(i.cost + i.hcost)
-            nodes.append(i)
-            unexpanded.append(iname)
+        if (not iname in expanded):# and (not iname in unexpanded):
+
+            if not focus.in_journey(i): 
+                nodes.append(i)
+                unexpanded.append(iname)
 
     expanded.append(nname)
     unexpanded.remove(nname)
