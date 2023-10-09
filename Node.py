@@ -6,6 +6,9 @@ class Node:
         self.cost = cost
         self.hcost = self.heuristic()
 
+    def name(self):
+        return str(self.find_player())# + " ~ " + str(self.cost + self.hcost)
+
     def heuristic(self):
         ccol, crow = self.board.find_player()
         gcol, grow = self.goal.find_player()
@@ -18,11 +21,15 @@ class Node:
     def find_player(self):
         return self.board.find_player()
 
+    def cell_cost(self, x, y):
+        return int(self.board.state[y][x])
+
     def find_moves(self):
         moves = []
         boards = self.board.calculate_moves()
         for i in boards:
-            n = Node(i, self.goal, self, self.cost+1)
+            px, py = i.find_player()
+            n = Node(i, self.goal, self, self.cost+1+self.cell_cost(px, py))
             moves.append(n)
         return moves
 

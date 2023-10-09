@@ -1,7 +1,9 @@
 BLANK = "█"
 
 class Board:
-    def __init__(self, basis):
+    def __init__(self, basis, playertile="0"):
+        self.tile = playertile
+        
         if type(basis) == list:
             self.state = basis[:]
         else:
@@ -32,29 +34,33 @@ class Board:
 
         if row - 1 >= 0:
             if self.state[row-1][col] != BLANK:
-                a = Board(self)
-                a.change(col, row, "0")
+                ov = self.state[row-1][col]
+                a = Board(self, ov)
+                a.change(col, row, self.tile)
                 a.change(col, row-1, "P")
                 moves.append(a)
                 
         if row + 1 < len(self.state):
             if self.state[row+1][col] != BLANK:
-                b = Board(self)
-                b.change(col, row, "0")
+                ov = self.state[row+1][col]
+                b = Board(self, ov)
+                b.change(col, row, self.tile)
                 b.change(col, row+1, "P")
                 moves.append(b)
 
         if col - 1 >= 0:
             if self.state[row][col-1] != BLANK:
-                c = Board(self)
-                c.change(col, row, "0")
+                ov = self.state[row][col-1]
+                c = Board(self, ov)
+                c.change(col, row, self.tile)
                 c.change(col-1, row, "P")
                 moves.append(c)
 
         if col + 1 < len(self.state[row]):
             if self.state[row][col+1] != BLANK:
-                d = Board(self)
-                d.change(col, row, "0")
+                ov = self.state[row][col+1]
+                d = Board(self, ov)
+                d.change(col, row, self.tile)
                 d.change(col+1, row, "P")
                 moves.append(d)
         

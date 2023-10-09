@@ -25,7 +25,8 @@ t = TurtlePrinter(begin.board, start.find_player(), goal.find_player(), 32)
 
 
 expanded = []
-unexpanded = [begin.find_player()]
+unexpanded = [begin.name()]
+
 nodes = [begin]
 #h = begin.heuristic()
 
@@ -34,16 +35,19 @@ timer = time.time()
 while len(nodes) > 0:
     nodes.sort(key=sorter)
     focus = nodes.pop(0)
-    nname = focus.find_player()
-
+    nname = focus.name()
     if focus.complete():
         final = focus
         break
 
     nm = focus.find_moves()
     for i in nm:
-        iname = i.find_player()
+        iname = i.name()
         if (not iname in expanded) and (not iname in unexpanded):
+            if i.find_player() == [14, 2]:
+                print("Junction")
+                print(i.parent.board)
+                print(i.cost + i.hcost)
             nodes.append(i)
             unexpanded.append(iname)
 
@@ -59,12 +63,12 @@ while child is not None:
 route.reverse()
 
 totaltimer = time.time() - timer
-#print(f"Took {totaltimer} seconds. Displaying path in 5 seconds.")
-#time.sleep(5)
 
-#for i in route:
-    #print(i)
-    #print(i.board)
+verbose = False
+if verbose:
+    for i in route:
+        print(i)
+        print(i.board)
 print(f"Took {totaltimer} seconds, and {len(route)} moves.")
 
 t.DrawBoard()

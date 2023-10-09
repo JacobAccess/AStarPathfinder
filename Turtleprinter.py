@@ -7,7 +7,7 @@ class TurtlePrinter:
         self.board = Board(board)
 
         px, py = self.board.find_player()
-        self.board.state[py][px] = 0
+        self.board.state[py][px] = "0"
 
         self.grid = grid
 
@@ -35,6 +35,10 @@ class TurtlePrinter:
             for j in range(0, len(self.board.state[i])):
                 if self.board.state[i][j] == BLANK:
                     self.DrawSquare(j, i)
+                elif self.board.state[i][j] not in ["0", "P"]:
+                    c = (9-int(self.board.state[i][j])) * (255/9)
+                    c = round(c)
+                    self.DrawSquare(j, i, (c,c,c))
         turtle.update()
 
     def DrawSquare(self, x, y, colour=(0,0,0)):
@@ -58,6 +62,8 @@ class TurtlePrinter:
         t = self.turtle
         turtle.tracer(self.tracer)
         t.color((0,0,255))
+        if len(route) == 0:
+            return
         route.pop(0)
         t.up()
         self.Move(self.start[0], self.start[1])
