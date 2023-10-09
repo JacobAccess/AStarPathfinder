@@ -14,6 +14,7 @@ class TurtlePrinter:
         self.w = grid * len(self.board.state[0])
         self.h = grid * len(self.board.state)
         turtle.setup(self.w + grid, self.h + grid)
+        turtle.colormode(255)
         self.turtle = turtle.Turtle()
         self.turtle.speed(1)
         self.turtle.shape("circle")
@@ -25,18 +26,18 @@ class TurtlePrinter:
         self.start = start
         self.goal = goal
         
-        self.DrawSquare(start[0], start[1], "red")
-        self.DrawSquare(goal[0], goal[1], "green")
+        self.DrawSquare(start[0], start[1], (255,0,0))
+        self.DrawSquare(goal[0], goal[1], (0,255,0))
 
 
     def DrawBoard(self):
         for i in range(0, len(self.board.state)):
             for j in range(0, len(self.board.state[i])):
-                if self.board.state[i][j] == 1:
+                if self.board.state[i][j] == BLANK:
                     self.DrawSquare(j, i)
         turtle.update()
 
-    def DrawSquare(self, x, y, colour="black"):
+    def DrawSquare(self, x, y, colour=(0,0,0)):
         t = self.turtle
         t.color(colour)
         t.up()
@@ -46,7 +47,7 @@ class TurtlePrinter:
             t.forward(self.grid)
             t.right(90)
         t.end_fill()
-        t.color("black")
+        t.color((0,0,0))
 
 
     def Move(self, x, y):
@@ -56,7 +57,7 @@ class TurtlePrinter:
     def Solve(self, route):
         t = self.turtle
         turtle.tracer(self.tracer)
-        t.color("blue")
+        t.color((0,0,255))
         route.pop(0)
         t.up()
         self.Move(self.start[0], self.start[1])

@@ -1,4 +1,7 @@
 from PIL import Image
+from Board import *
+
+BLANK = "█"
 
 RED = (237, 28, 36)
 
@@ -28,14 +31,15 @@ def ReadMaze(image):
 
             x = pixels[p]
             y = 0
-            if x == (0,0,0) or x == (0,0,0,255):
-                y = 1
-            elif x == (255,255,255) or x == (255,255,255,255):
-                y = 0
-            elif Approximate(x, RED):
-                y = 2
+            if Approximate(x, RED):
+                y = "P"
+            elif x[0] == x[1] == x[2]:
+                if x == (0,0,0) or x == (0,0,0,255):
+                    y = BLANK
+                elif x == (255,255,255) or x == (255,255,255,255):
+                    y = "0"
             else:
-                y = 3
+                y = "G"
                 
             row.append(y)
         data.append(row)
@@ -45,8 +49,8 @@ def ReadMaze(image):
            
     for i in range(0, len(end)):
         for j in range(0, len(end[i])):
-            if end[i][j] == 2:
-                end[i][j] = 0
+            if end[i][j] == "P":
+                end[i][j] = "0"
                 break
         else:
             continue
@@ -56,9 +60,9 @@ def ReadMaze(image):
 
     for i in range(0, len(start)):
         for j in range(0, len(start[i])):
-            if start[i][j] == 3:
-                start[i][j] = 0
-                end[i][j] = 2
+            if start[i][j] == "G":
+                start[i][j] = "0"
+                end[i][j] = "P"
                 break
         else:
             continue
@@ -70,6 +74,6 @@ def ReadMaze(image):
 
 if __name__ == "__main__":
     start, finish = ReadMaze("maze.png")
-    #print(start)
-    #print(finish)
+    print(Board(start))
+    print(Board(finish))
     print(Approximate((0,255,0), RED))

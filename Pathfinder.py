@@ -13,7 +13,7 @@ def printer():
     for i in nodes:
         print(i)
 
-s, g = ReadMaze("mediummaze.png")
+s, g = ReadMaze("maze.png")
 
 final = None
 
@@ -21,7 +21,7 @@ goal = Board(g)
 start = Board(s)
 
 begin = Node(start, goal, cost=0)
-t = TurtlePrinter(begin.board, start.find_player(), goal.find_player(), 8)
+t = TurtlePrinter(begin.board, start.find_player(), goal.find_player(), 32)
 
 
 expanded = []

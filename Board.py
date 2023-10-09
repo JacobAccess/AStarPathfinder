@@ -1,3 +1,5 @@
+BLANK = "█"
+
 class Board:
     def __init__(self, basis):
         if type(basis) == list:
@@ -13,7 +15,7 @@ class Board:
         col = -1
         for i in range(0, len(self.state)):
             try:
-                col = self.state[i].index(2)
+                col = self.state[i].index("P")
                 row = i
             except:
                 pass
@@ -29,46 +31,48 @@ class Board:
         #return [col, row]
 
         if row - 1 >= 0:
-            if self.state[row-1][col] == 0:
-                b = Board(self)
-                b.change(col, row, 0)
-                b.change(col, row-1, 2)
-                moves.append(b)
+            if self.state[row-1][col] != BLANK:
+                a = Board(self)
+                a.change(col, row, "0")
+                a.change(col, row-1, "P")
+                moves.append(a)
                 
         if row + 1 < len(self.state):
-            if self.state[row+1][col] == 0:
+            if self.state[row+1][col] != BLANK:
                 b = Board(self)
-                b.change(col, row, 0)
-                b.change(col, row+1, 2)
+                b.change(col, row, "0")
+                b.change(col, row+1, "P")
                 moves.append(b)
 
         if col - 1 >= 0:
-            if self.state[row][col-1] == 0:
-                b = Board(self)
-                b.change(col, row, 0)
-                b.change(col-1, row, 2)
-                moves.append(b)
+            if self.state[row][col-1] != BLANK:
+                c = Board(self)
+                c.change(col, row, "0")
+                c.change(col-1, row, "P")
+                moves.append(c)
 
         if col + 1 < len(self.state[row]):
-            if self.state[row][col+1] == 0:
-                b = Board(self)
-                b.change(col, row, 0)
-                b.change(col+1, row, 2)
-                moves.append(b)
+            if self.state[row][col+1] != BLANK:
+                d = Board(self)
+                d.change(col, row, "0")
+                d.change(col+1, row, "P")
+                moves.append(d)
         
         return moves
 
     def __str__(self):
         o = ""
         for i in self.state:
-            o = o + "\n" + str(i)
+            for j in i:
+                o = o + j
+            o = o + "\n"
         return o
         
         
 if __name__ == "__main__":
-    s = [[0,0,0],
-         [1,1,0],
-         [0,2,0]]
+    s = [["0","0","0"],
+         [BLANK,BLANK,"0"],
+         ["0","P","0"]]
     b = Board(s)
     c = b.calculate_moves()
     for i in c:
