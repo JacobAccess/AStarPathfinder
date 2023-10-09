@@ -1,5 +1,14 @@
 from PIL import Image
 
+RED = (237, 28, 36)
+
+def Approximate(colour, comparison, margin=55):
+    r = abs(comparison[0] - colour[0])
+    g = abs(comparison[1] - colour[1])
+    b = abs(comparison[2] - colour[2])
+
+    return r < margin and g < margin and b < margin
+
 def CloneList(l):
     o = l[:]
     for i in range(0, len(o)):
@@ -23,7 +32,7 @@ def ReadMaze(image):
                 y = 1
             elif x == (255,255,255) or x == (255,255,255,255):
                 y = 0
-            elif x == (237, 28, 36) or x == (237, 28, 36, 255):
+            elif Approximate(x, RED):
                 y = 2
             else:
                 y = 3
@@ -61,5 +70,6 @@ def ReadMaze(image):
 
 if __name__ == "__main__":
     start, finish = ReadMaze("maze.png")
-    print(start)
-    print(finish)
+    #print(start)
+    #print(finish)
+    print(Approximate((0,255,0), RED))
